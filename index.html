@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Training Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#e6e4de;--card:#f1efea;--ink:#12213f;--mute:#5d6882;--line:#d6d3ca;--acc:#1b2f5e;--acc2:#dae1ef;--onacc:#f1efea;--shadow:0 6px 24px rgba(18,33,63,.08);
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
@@ -19,7 +20,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 main>*{animation:fade .5s ease both}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(900px 420px at 50% -120px,var(--acc2),transparent) fixed,var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:radial-gradient(900px 420px at 50% -120px,var(--acc2),transparent) fixed,var(--bg);color:var(--ink);font:16px/1.5 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 main{max-width:860px;margin:0 auto;padding:20px 16px 48px}
 h1{font-size:1.7rem;margin:0 0 2px;letter-spacing:-.02em}
 .sub{color:var(--mute);margin:0 0 18px;font-size:.9rem}
@@ -79,6 +80,41 @@ dialog.sheet input[type=number]{text-align:center;font-size:1.15rem;font-weight:
 #list .row{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:8px}
 .stat{border-top:3px solid var(--acc)}
 .pill.out{cursor:pointer;color:#e6e4de;margin-left:6px;padding:4px 12px}
+
+.stars{animation:tw 3.5s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.25}to{opacity:.95}}
+@keyframes drift{to{transform:translate(3%,2%) scale(1.08)}}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(500px 400px at 15% 20%,var(--acc2),transparent 70%),radial-gradient(500px 400px at 85% 70%,var(--acc2),transparent 70%);animation:drift 18s ease-in-out infinite alternate}
+.card{transition:transform .3s ease,box-shadow .3s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(18,33,63,.15)}
+.stat:nth-child(1) span::before{content:'📅 '}.stat:nth-child(2) span::before{content:'🔥 '}.stat:nth-child(3) span::before{content:'⏱️ '}.stat:nth-child(4) span::before{content:'🏋️ '}
+.calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.calh button{width:38px;height:38px;padding:0;border-radius:50%;font-size:1.3rem;line-height:1}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal .dn{font-style:normal;text-align:center;font-size:.72rem;color:var(--mute);font-weight:600}
+.day{aspect-ratio:1;padding:0;border-radius:14px;border:1px solid transparent;background:var(--bg);font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.9rem}
+.day u{text-decoration:none;color:var(--acc);font-size:.5rem;letter-spacing:1px;line-height:.6;margin-top:3px}
+.day.has{background:var(--acc2)}
+.day.today{border-color:var(--acc)}
+.day.sel{background:var(--acc);color:var(--onacc)}
+.day.sel u{color:var(--onacc)}
+#dayinfo{margin-top:14px}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+button.sm{padding:6px 12px;font-size:.85rem}
+.mini{display:flex;align-items:center;gap:10px;padding:6px 0;font-weight:500}
+.th{width:52px;height:52px;border-radius:12px;object-fit:cover;cursor:zoom-in;flex:none;transition:transform .2s}
+.th:hover{transform:scale(1.06)}
+.drop{border:2px dashed var(--line);border-radius:16px;padding:16px;text-align:center;cursor:pointer;color:var(--mute);font-size:.9rem;transition:border-color .2s,background .2s;align-items:center}
+.drop:hover{border-color:var(--acc);background:var(--acc2)}
+.drop img{width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:8px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.gal img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;cursor:zoom-in;transition:transform .25s}
+.gal img:hover{transform:scale(1.04)}
+dialog.lb{border:none;background:transparent;padding:0;max-width:94vw;max-height:90vh;outline:none}
+dialog.lb::backdrop{background:rgba(4,8,20,.85);backdrop-filter:blur(6px)}
+dialog.lb img{max-width:94vw;max-height:88vh;border-radius:18px;display:block}
+dialog[open]{animation:fade .3s ease}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -87,7 +123,7 @@ dialog.sheet input[type=number]{text-align:center;font-size:1.15rem;font-weight:
 <form id="af"><input id="un" type="email" placeholder="Email" autocomplete="email"><input id="pw" type="password" placeholder="Password" autocomplete="current-password"><button class="primary" id="go" disabled>Loading…</button></form><p id="amsg"></p></div></div>
 <main id="app" hidden>
 <section class="hero">
-<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1226"/><stop offset=".6" stop-color="#1b2f5e"/><stop offset="1" stop-color="#3d5a96"/></linearGradient><radialGradient id="sn"><stop offset="0" stop-color="#f1efea"/><stop offset="1" stop-color="#f1efea" stop-opacity="0"/></radialGradient></defs><rect width="800" height="260" fill="url(#sk)"/><circle cx="560" cy="150" r="90" fill="url(#sn)" opacity=".5"/><circle cx="560" cy="150" r="30" fill="#e6e4de"/><g fill="#e6e4de" opacity=".7"><circle cx="90" cy="40" r="1.6"/><circle cx="210" cy="70" r="1.2"/><circle cx="330" cy="30" r="1.8"/><circle cx="430" cy="60" r="1.2"/><circle cx="700" cy="35" r="1.6"/><circle cx="760" cy="90" r="1.2"/></g><polygon points="0,260 0,170 120,110 220,175 340,95 470,185 600,130 720,180 800,140 800,260" fill="#142550"/><polygon points="0,260 0,205 140,160 260,210 400,150 540,215 680,170 800,205 800,260" fill="#0c1a3a"/><g stroke="#e6e4de" stroke-width="5" stroke-linecap="round" fill="none"><circle cx="650" cy="150" r="9" fill="#e6e4de"/><path d="M650 161L638 195M650 168L666 180M650 168L632 176M638 195L658 214L654 236M638 195L618 212L600 205"/></g><g fill="#e6e4de"><rect x="70" y="222" width="110" height="6" rx="3"/><rect x="62" y="208" width="12" height="34" rx="3"/><rect x="176" y="208" width="12" height="34" rx="3"/><rect x="52" y="214" width="8" height="22" rx="2"/><rect x="190" y="214" width="8" height="22" rx="2"/></g></svg>
+<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1226"/><stop offset=".6" stop-color="#1b2f5e"/><stop offset="1" stop-color="#3d5a96"/></linearGradient><radialGradient id="sn"><stop offset="0" stop-color="#f1efea"/><stop offset="1" stop-color="#f1efea" stop-opacity="0"/></radialGradient></defs><rect width="800" height="260" fill="url(#sk)"/><circle cx="560" cy="150" r="90" fill="url(#sn)" opacity=".5"/><circle cx="560" cy="150" r="30" fill="#e6e4de"/><g class="stars" fill="#e6e4de" opacity=".7"><circle cx="90" cy="40" r="1.6"/><circle cx="210" cy="70" r="1.2"/><circle cx="330" cy="30" r="1.8"/><circle cx="430" cy="60" r="1.2"/><circle cx="700" cy="35" r="1.6"/><circle cx="760" cy="90" r="1.2"/></g><polygon points="0,260 0,170 120,110 220,175 340,95 470,185 600,130 720,180 800,140 800,260" fill="#142550"/><polygon points="0,260 0,205 140,160 260,210 400,150 540,215 680,170 800,205 800,260" fill="#0c1a3a"/><g stroke="#e6e4de" stroke-width="5" stroke-linecap="round" fill="none"><circle cx="650" cy="150" r="9" fill="#e6e4de"/><path d="M650 161L638 195M650 168L666 180M650 168L632 176M638 195L658 214L654 236M638 195L618 212L600 205"/></g><g fill="#e6e4de"><rect x="70" y="222" width="110" height="6" rx="3"/><rect x="62" y="208" width="12" height="34" rx="3"/><rect x="176" y="208" width="12" height="34" rx="3"/><rect x="52" y="214" width="8" height="22" rx="2"/><rect x="190" y="214" width="8" height="22" rx="2"/></g></svg>
 <div><h1>Training Tracker</h1>
 <p class="sub" id="quote">Log every session, watch your consistency build.</p>
 <span class="pill" id="lvl">Level 1</span> <button class="pill out" id="out" type="button">Log out</button></div>
@@ -110,10 +146,13 @@ dialog.sheet input[type=number]{text-align:center;font-size:1.15rem;font-weight:
     <label>Reps<input type="number" id="reps" min="0" step="1" placeholder="0"></label>
     <label>Weight (kg)<input type="number" id="weight" min="0" step="0.5" placeholder="0"></label>
     <label>Minutes<input type="number" id="mins" min="0" step="1" placeholder="0"></label>
+    <label class="wide drop"><input type="file" id="photo" accept="image/*" hidden><img id="prev" hidden alt=""><span id="dropT">📷 Add a photo</span></label>
     <label class="wide">Notes<input id="notes" placeholder="How did it feel?" maxlength="200"></label>
-    <div class="wide actions"><button type="button" id="cancel">Cancel</button><button class="primary" type="submit">Save workout</button></div>
+    <div class="wide actions"><button type="button" id="cancel">Cancel</button><button class="primary" id="save" type="submit">Save workout</button></div>
   </form>
 </dialog>
+
+<div class="card"><div class="calh"><button type="button" id="calP" aria-label="Previous month">‹</button><h2 id="calT" style="margin:0"></h2><button type="button" id="calN" aria-label="Next month">›</button></div><div class="cal" id="cal"></div><div id="dayinfo"></div></div>
 
 <div class="two">
   <div class="card"><h2>Days trained per week</h2><div class="chart" id="chart"></div></div>
@@ -126,14 +165,16 @@ dialog.sheet input[type=number]{text-align:center;font-size:1.15rem;font-weight:
   </div>
   <div id="list"></div>
 </div>
+<div class="card" id="galc" hidden><h2>Photos</h2><div class="gal" id="gal"></div></div>
 <div id="status"></div>
 </main>
+<dialog id="lb" class="lb"><img id="lbi" alt=""></dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 (function(){
 /* 1. Paste your Supabase project values here (Project Settings > API) */
-var SUPABASE_URL='https://nrnibqgawriljyptciuj.supabase.co',SUPABASE_KEY='sb_publishable_fQxjpiKXPsyUQVfyoVMWrQ_wgHg-Vnj',sb=null,user=null;
+var SUPABASE_URL='https://nrnibqgawriljyptciuj.supabase.co',SUPABASE_KEY='sb_publishable_fQxjpiKXPsyUQVfyoVMWrQ_wgHg-Vnj',sb=null,user=null,cy=new Date().getFullYear(),cm=new Date().getMonth(),sel=iso(new Date()),photoBlob=null;
 var ICON={Strength:'💪',Cardio:'🏃',Mobility:'🧘',Sport:'⚽',Other:'✨'},Q=['Log every session, watch your consistency build.','Small sessions beat perfect plans.','Show up today. Future you says thanks.','Strong is built one rep at a time.','Rest is part of the program.'],W=[],DB={profiles:{}},legacy=[],cur='',store=null,$=function(i){return document.getElementById(i)};
 function iso(d){return d.toLocaleDateString('en-CA')}
 function esc(s){var e=document.createElement('div');e.textContent=s;return e.innerHTML}
@@ -145,7 +186,7 @@ function setStatus(t){$('status').textContent=t}
 async function loadW(){
   var r=await sb.from('workouts').select('*').order('date',{ascending:false});
   if(r.error){setStatus('Could not load workouts: '+r.error.message);return}
-  W=r.data.map(function(x){return {id:x.id,date:x.date,type:x.type,name:x.name,sets:x.sets,reps:x.reps,weight:+x.weight,mins:x.mins,notes:x.notes}});
+  W=r.data.map(function(x){return {id:x.id,date:x.date,type:x.type,name:x.name,sets:x.sets,reps:x.reps,weight:+x.weight,mins:x.mins,notes:x.notes,photo:x.photo}});
   setStatus('Synced to your account.');render();
 }
 
@@ -192,28 +233,70 @@ function render(){
     if(w.sets||w.reps)bits.push((w.sets||'–')+' × '+(w.reps||'–'));
     if(w.weight)bits.push(w.weight+' kg');
     if(w.mins)bits.push(w.mins+' min');
-    return '<div class="row"><div><div class="t"><span class="tag">'+(ICON[w.type]||'✨')+' '+esc(w.type)+'</span>'+esc(w.name)+'</div>'
+    return '<div class="row">'+(w.photo?'<img class="th" loading="lazy" data-ph="'+w.photo+'" src="'+w.photo+'" alt="">':'')+'<div style="flex:1"><div class="t"><span class="tag">'+(ICON[w.type]||'✨')+' '+esc(w.type)+'</span>'+esc(w.name)+'</div>'
       +'<div class="m">'+w.date+(bits.length?' · '+bits.join(' · '):'')+(w.notes?' · '+esc(w.notes):'')+'</div></div>'
       +'<button class="x" data-id="'+w.id+'" aria-label="Delete workout">✕</button></div>'}).join('')
     :'<p class="empty">No workouts yet. Add your first one above.</p>';
+  renderCal();renderGallery();
 }
 
+function renderCal(){
+  var first=new Date(cy,cm,1),lead=(first.getDay()+6)%7,dim=new Date(cy,cm+1,0).getDate(),by={},t=iso(new Date());
+  W.forEach(function(w){(by[w.date]=by[w.date]||[]).push(w)});
+  $('calT').textContent=first.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+  var h='';['Mo','Tu','We','Th','Fr','Sa','Su'].forEach(function(n){h+='<i class="dn">'+n+'</i>'});
+  for(var i=0;i<lead;i++)h+='<i></i>';
+  for(var d=1;d<=dim;d++){var k=cy+'-'+String(cm+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'),c=(by[k]||[]).length;
+    h+='<button type="button" class="day'+(c?' has':'')+(k===t?' today':'')+(k===sel?' sel':'')+'" data-d="'+k+'">'+d+(c?'<u>'+'●'.repeat(Math.min(c,3))+'</u>':'')+'</button>'}
+  $('cal').innerHTML=h;
+  var L=by[sel]||[];
+  $('dayinfo').innerHTML='<div class="dh"><b>'+parse(sel).toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+'</b><button type="button" class="primary sm" id="addDay">＋ Add</button></div>'
+    +(L.length?L.map(function(w){return '<div class="mini">'+(w.photo?'<img class="th" data-ph="'+w.photo+'" src="'+w.photo+'" alt="">':'')+'<span>'+(ICON[w.type]||'✨')+' '+esc(w.name)+'</span></div>'}).join(''):'<p class="empty">Rest day, nothing logged.</p>');
+}
+function renderGallery(){var P=W.filter(function(w){return w.photo}).slice(0,18);$('galc').hidden=!P.length;$('gal').innerHTML=P.map(function(w){return '<img data-ph="'+w.photo+'" src="'+w.photo+'" loading="lazy" alt="">'}).join('')}
+function shrink(f){return new Promise(function(res,rej){var im=new Image(),u=URL.createObjectURL(f);im.onload=function(){var k=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){b?res(b):rej()},'image/jpeg',.82)};im.onerror=rej;im.src=u})}
+$('photo').addEventListener('change',async function(){
+  var f=this.files[0];
+  if(!f){photoBlob=null;$('prev').hidden=true;return}
+  try{photoBlob=await shrink(f);$('prev').src=URL.createObjectURL(photoBlob);$('prev').hidden=false;$('dropT').textContent='Tap to change photo'}
+  catch(e){photoBlob=null;setStatus('Could not read that image.')}
+});
+$('calP').onclick=function(){cm--;if(cm<0){cm=11;cy--}renderCal()};
+$('calN').onclick=function(){cm++;if(cm>11){cm=0;cy++}renderCal()};
+$('cal').addEventListener('click',function(e){var d=e.target.getAttribute&&e.target.getAttribute('data-d');if(d){sel=d;renderCal()}});
+$('dayinfo').addEventListener('click',function(e){if(e.target.id==='addDay'){$('date').value=sel;$('dlg').showModal()}});
+document.addEventListener('click',function(e){var u=e.target.getAttribute&&e.target.getAttribute('data-ph');if(u){$('lbi').src=u;$('lb').showModal()}});
+$('lb').onclick=function(){this.close()};
 $('f').addEventListener('submit',async function(e){
   e.preventDefault();
-  var n=function(i){return parseFloat($(i).value)||0};
-  var row={date:$('date').value,type:$('type').value,name:$('name').value.trim(),sets:n('sets'),reps:n('reps'),weight:n('weight'),mins:n('mins'),notes:$('notes').value.trim()};
-  var r=await sb.from('workouts').insert(row).select().single();
-  if(r.error){setStatus('Could not save: '+r.error.message);return}
-  W.unshift(Object.assign({},row,{id:r.data.id}));
-  ['name','sets','reps','weight','mins','notes'].forEach(function(i){$(i).value=''});
-  render();confetti();$('dlg').close();setStatus('Saved to your account.');
+  var b=$('save');b.disabled=true;b.textContent='Saving…';
+  try{
+    var n=function(i){return parseFloat($(i).value)||0};
+    var row={date:$('date').value,type:$('type').value,name:$('name').value.trim(),sets:n('sets'),reps:n('reps'),weight:n('weight'),mins:n('mins'),notes:$('notes').value.trim()};
+    if(photoBlob){
+      var path=user.id+'/'+Date.now()+'.jpg';
+      var up=await sb.storage.from('photos').upload(path,photoBlob,{contentType:'image/jpeg'});
+      if(up.error){setStatus('Photo upload failed: '+up.error.message);return}
+      row.photo=sb.storage.from('photos').getPublicUrl(path).data.publicUrl;
+    }
+    var r=await sb.from('workouts').insert(row).select().single();
+    if(r.error){setStatus('Could not save: '+r.error.message);return}
+    W.unshift(Object.assign({},row,{id:r.data.id}));
+    ['name','sets','reps','weight','mins','notes'].forEach(function(i){$(i).value=''});
+    photoBlob=null;$('photo').value='';$('prev').hidden=true;$('dropT').textContent='📷 Add a photo';
+    sel=row.date;cy=+row.date.slice(0,4);cm=+row.date.slice(5,7)-1;
+    render();confetti();$('dlg').close();setStatus('Saved to your account.');
+  }catch(err){setStatus('Something went wrong. Please try again.')}
+  finally{b.disabled=false;b.textContent='Save workout'}
 });
 $('list').addEventListener('click',async function(e){
   var id=e.target.getAttribute&&e.target.getAttribute('data-id');
   if(!id)return;
+  var w=W.find(function(x){return String(x.id)===id});
   var r=await sb.from('workouts').delete().eq('id',id);
   if(r.error){setStatus('Could not delete: '+r.error.message);return}
-  W=W.filter(function(w){return String(w.id)!==id});render();
+  if(w&&w.photo){var pp=w.photo.split('/photos/')[1];if(pp)sb.storage.from('photos').remove([pp])}
+  W=W.filter(function(x){return String(x.id)!==id});render();
 });
 $('filter').addEventListener('change',render);
 function confetti(){var c=['#8fb0ea','#e6e4de','#3d5a96','#f4c95d','#5fa8d3'];
